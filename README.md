@@ -197,9 +197,9 @@ start nginx   # 启动 Nginx 服务
 CMD
 node server.js
 看到 服务器运行在 http://localhost:3001 等提示即表示成功。此窗口需要保持打开。（建议以管理员运行，或者给进程给予修改nginx黑名单文件的权限等）
+
 7. 🚨 完成与安全设置
 防火墙设置:
-
 打开 Windows Defender 防火墙 -> 高级设置 -> 入站规则 -> 新建规则。
 选择 "端口"，协议 "TCP"，特定本地端口 "80"，允许连接。
 命名为 "Nginx HTTP" 并保存。
