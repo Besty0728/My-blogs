@@ -37,16 +37,18 @@ CMD
 npm install
 
 安装完成后，在blog目录下手动创建一个名为 uploads 的空文件夹！！！
-4. 获取安全密钥 (Cloudflare)
-本博客使用 Cloudflare Turnstile 进行人机验证，你需要免费注册一个 Cloudflare 账号并获取密钥。
+
+3. 获取安全密钥 (Cloudflare)
+
+   本博客使用 Cloudflare Turnstile 进行人机验证，你需要免费注册一个 Cloudflare 账号并获取密钥。
 
    登录 Cloudflare 账号，在左侧菜单进入 Turnstile。
    
-点击 Add site，填写你的网站名称，选择你的域名，然后点击 Create。
+   点击 Add site，填写你的网站名称，选择你的域名，然后点击 Create。
 
-在下一个页面，你会看到 Site Key (站点密钥) 和 Secret Key (私钥)。请将这两个值复制下来，稍后会用到。
+   在下一个页面，你会看到 Site Key (站点密钥) 和 Secret Key (私钥)。请将这两个值复制下来，稍后会用到。
 
-5. ⚙️ 核心配置 (请仔细修改！)
+4. ⚙️ 核心配置 (请仔细修改！)
 这是部署过程中最关键的一步。你需要修改 backend/server.js 和 blogs.html 两个文件。
 
    A. 配置后端 server.js
@@ -101,7 +103,7 @@ npm install
    <div class="cf-turnstile" data-sitekey="your CloudFlare Turnstile Site key" ...>
    修改: 将 your CloudFlare Turnstile Site key 替换为你在 步骤 3 中获取的 Site Key (站点密钥)。
    
-6. 配置并启动 Nginx
+5. 配置并启动 Nginx
 在 C:\nginx\conf 目录下，创建一个名为 blockips.conf 的空文件。这是给后端程序写入黑名单用的。
 
    用编辑器打开 C:\nginx\conf\nginx.conf 文件，将其 全部内容 替换为以下配置：
@@ -234,6 +236,7 @@ CMD
 cd C:\nginx
 nginx -t      # 测试配置是否正确，必须显示 ok
 start nginx   # 启动 Nginx 服务
+
 6. 启动后端服务
 回到 C:\blog\backend 目录的命令提示符窗口。
 启动后端服务：
