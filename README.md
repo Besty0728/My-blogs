@@ -1,4 +1,5 @@
 流转星个人博客 - 部署指南
+
 欢迎使用流转星个人博客系统！这是一个功能完善、界面炫酷的前后端分离个人博客。本指南将引导你完成从零到一的完整部署过程。
 
 ✨ 功能特性
@@ -22,8 +23,11 @@ Web服务器/反向代理: Nginx
 
 1. 环境准备
 在开始之前，请确保你已经安装了以下软件：
-Node.js
-Nginx
+
+   Node.js
+
+   Nginx
+
 2. 获取代码与安装依赖
 将本项目Relase下载的zip文件解压到一个你确定的目录。
 打开 命令提示符 (cmd)，进入后端目录(backend)并安装依赖：
@@ -34,71 +38,77 @@ npm install
 3. 获取安全密钥 (Cloudflare)
 本博客使用 Cloudflare Turnstile 进行人机验证，你需要免费注册一个 Cloudflare 账号并获取密钥。
 
-登录 Cloudflare 账号，在左侧菜单进入 Turnstile。
+   登录 Cloudflare 账号，在左侧菜单进入 Turnstile。
 点击 Add site，填写你的网站名称，选择你的域名，然后点击 Create。
 在下一个页面，你会看到 Site Key (站点密钥) 和 Secret Key (私钥)。请将这两个值复制下来，稍后会用到。
+
 4. ⚙️ 核心配置 (请仔细修改！)
 这是部署过程中最关键的一步。你需要修改 backend/server.js 和 blogs.html 两个文件。
 
-A. 配置后端 server.js
+   A. 配置后端 server.js
 用代码编辑器（如 VS Code）或记事本打开 C:\blog\backend\server.js 文件，找到并替换所有以 TODO: 或 YOUR_... 开头的占位符：以及想要更换博客的Github、Email、B站等，前往blogs.html的更改大约第1640行：“<div class="social-links">”下面的内容即可；以及博客的头像、背景等图片存放于images文件夹下，要修改的话建议去源代码更改头像等路径
 
-JWT_SECRET:
+   JWT_SECRET:
 
-作用: 用于后台登录状态的加密。
-修改: 替换为一个你自己生成的、非常长的随机字符串。
-示例: const JWT_SECRET = 'a-very-long-and-random-string-like-this-one-!@#$';
+   作用: 用于后台登录状态的加密。
+   修改: 替换为一个你自己生成的、非常长的随机字符串。
+   示例: const JWT_SECRET = 'a-very-long-and-random-string-like-this-one-!@#$';
 
-BACKEND_URL:
+   BACKEND_URL:
 
-作用: 用于生成上传图片的访问链接。
-修改: 替换成你为 后端管理 准备的域名（带 http:// 或 https://）。
-示例: const BACKEND_URL = 'http://blog-admin.yourdomain.com';
+   作用: 用于生成上传图片的访问链接。
+   修改: 替换成你为 后端管理 准备的域名（带 http:// 或 https://）。
+   示例: const BACKEND_URL = 'http://blog-admin.yourdomain.com';
 
-BLOCK_IP_FILE (Nginx IP封禁文件路径):
+   BLOCK_IP_FILE (Nginx IP封禁文件路径):
 
-作用: 告诉后端程序 Nginx 的黑名单文件在哪里。
-修改: 替换为你的 Nginx 黑名单文件的绝对路径。
-示例 (假设 Nginx 在 C:\nginx): const BLOCK_IP_FILE = 'C:/nginx/conf/blockips.conf';
+   作用: 告诉后端程序 Nginx 的黑名单文件在哪里。
+   修改: 替换为你的 Nginx 黑名单文件的绝对路径。
+   示例 (假设 Nginx 在 C:\nginx): const BLOCK_IP_FILE = 'C:/nginx/conf/blockips.conf';
 
-secretKey (在 /api/verify-entry 接口中):
+   secretKey (在 /api/verify-entry 接口中):
 
-作用: Cloudflare Turnstile 的后端验证密钥。
-修改: 替换为你在 步骤 3 中获取的 Secret Key (私钥)。
-示例: const secretKey = '0x4...YOUR_SECRET_KEY...';
+   作用: Cloudflare Turnstile 的后端验证密钥。
+   修改: 替换为你在 步骤 3 中获取的 Secret Key (私钥)。
+   示例: const secretKey = '0x4...YOUR_SECRET_KEY...';
 
-nginxPath 和 cwd (在 ban-ip 和 unban-ip 接口中):
+   nginxPath 和 cwd (在 ban-ip 和 unban-ip 接口中):
 
-作用: 告诉后端程序如何自动重载 Nginx 配置。
-修改: 将 Your_Nginx_... 替换为你的 Nginx 安装路径。
-示例 (假设 Nginx 在 C:\nginx):
-JAVASCRIPT
-const nginxPath = 'C:/nginx/nginx.exe';
-await execa(nginxPath, ['-s', 'reload'], {
-    cwd: 'C:/nginx' 
-});
+   作用: 告诉后端程序如何自动重载 Nginx 配置。
+   修改: 将 Your_Nginx_... 替换为你的 Nginx 安装路径。
+   示例 (假设 Nginx 在 C:\nginx):
+   JAVASCRIPT
+   const nginxPath = 'C:/nginx/nginx.exe';
+   await execa(nginxPath, ['-s', 'reload'], {
+       cwd: 'C:/nginx' 
+   });
 
-NGINX_ERROR_LOG_PATH:
+   NGINX_ERROR_LOG_PATH:
 
-作用: 告诉后端程序去哪里监控 Nginx 的错误日志以发现攻击者。
-修改: 替换为你的 Nginx 错误日志文件的绝对路径。
-示例 (假设 Nginx 在 C:\nginx): const NGINX_ERROR_LOG_PATH = 'C:/nginx/logs/error.log';
-B. 配置前端 blogs.html
-用编辑器打开 C:\blog\blogs.html 文件：
+   作用: 告诉后端程序去哪里监控 Nginx 的错误日志以发现攻击者。
+   修改: 替换为你的 Nginx 错误日志文件的绝对路径。
+   示例 (假设 Nginx 在 C:\nginx): const NGINX_ERROR_LOG_PATH = 'C:/nginx/logs/error.log';
+   
+   B. 配置前端 blogs.html
+   用编辑器打开 C:\blog\blogs.html 文件：
 
-找到下面这行代码：
-HTML
-<div class="cf-turnstile" data-sitekey="your CloudFlare Turnstile Site key" ...>
-修改: 将 your CloudFlare Turnstile Site key 替换为你在 步骤 3 中获取的 Site Key (站点密钥)。
+   找到下面这行代码：
+   HTML
+   <div class="cf-turnstile" data-sitekey="your CloudFlare Turnstile Site key" ...>
+   修改: 将 your CloudFlare Turnstile Site key 替换为你在 步骤 3 中获取的 Site Key (站点密钥)。
+   
 5. 配置并启动 Nginx
 在 C:\nginx\conf 目录下，创建一个名为 blockips.conf 的空文件。这是给后端程序写入黑名单用的。
 
-用编辑器打开 C:\nginx\conf\nginx.conf 文件，将其 全部内容 替换为以下配置：
+   用编辑器打开 C:\nginx\conf\nginx.conf 文件，将其 全部内容 替换为以下配置：
 
 NGINX
+
+#复制下面的即可
+
 worker_processes  1;
 
-# Nginx 错误日志路径，必须与 server.js 中的 NGINX_ERROR_LOG_PATH 一致
+#Nginx 错误日志路径，必须与 server.js 中的 NGINX_ERROR_LOG_PATH 一致
 error_log  logs/error.log warn; 
 
 events {
@@ -188,6 +198,7 @@ http {
         }
     }
 }
+
 【替换】 将上面配置中的 blog.yourdomain.com 和 blog-admin.yourdomain.com 换成你自己的域名。
 
 打开命令提示符(cmd)，启动 Nginx：
@@ -205,17 +216,25 @@ node server.js
 
 7. 🚨 完成与安全设置
 防火墙设置:
+
 打开 Windows Defender 防火墙 -> 高级设置 -> 入站规则 -> 新建规则。
+
 选择 "端口"，协议 "TCP"，特定本地端口 "80"，允许连接。
+
 命名为 "Nginx HTTP" 并保存。
+
 访问网站:
 
 前端博客: http://blog.yourdomain.com
+
 后台管理: http://blog-admin.yourdomain.com/admin
+
 首次登录与修改密码:
 
 默认用户名: admin
+
 默认密码: admin123
+
 【极其重要】 登录后请立即进入 安全设置 页面，修改你的管理员密码！
 
 (可选) 使用 PM2 实现服务持久化（但我没试过）
