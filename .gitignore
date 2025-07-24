@@ -1,0 +1,28 @@
+# 依赖文件夹
+/backend/node_modules
+
+# 数据库文件
+/backend/database.db
+
+# 上传的文件
+/backend/uploads/
+
+# 操作系统生成的文件
+.DS_Store
+Thumbs.db
+
+# 编辑器配置文件
+.vscode/
+.idea/
+
+# npm 调试日志
+npm-debug.log*
+
+# --- 日志和运行时文件 (通用) ---
+# 忽略所有日志文件
+*.log
+# 忽略专门的日志目录
+/backend/logs/
+# 忽略 PM2 进程ID文件
+/backend/pids/
+/backend/pm2.dump
