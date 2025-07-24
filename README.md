@@ -101,14 +101,11 @@ npm install
 在 C:\nginx\conf 目录下，创建一个名为 blockips.conf 的空文件。这是给后端程序写入黑名单用的。
 
    用编辑器打开 C:\nginx\conf\nginx.conf 文件，将其 全部内容 替换为以下配置：
-
-NGINX
-
-#复制下面的即可
-
+   
+```nginx
 worker_processes  1;
 
-#Nginx 错误日志路径，必须与 server.js 中的 NGINX_ERROR_LOG_PATH 一致
+# Nginx 错误日志路径，必须与 server.js 中的 NGINX_ERROR_LOG_PATH 一致
 error_log  logs/error.log warn; 
 
 events {
@@ -185,7 +182,10 @@ http {
         location = /api/auth/login {
             limit_req zone=loginlimit burst=5 nodelay;
             proxy_pass http://127.0.0.1:3001;
-            # ... 其他 proxy 设置 ...
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
         }
 
         # 反向代理到 Node.js 服务
@@ -198,8 +198,31 @@ http {
         }
     }
 }
+```
 
 【替换】 将上面配置中的 blog.yourdomain.com 和 blog-admin.yourdomain.com 换成你自己的域名。
+
+默认启用速率限制，你也可以删除与他有关的模块，弃用速率限制。
+
+# 附注：关于 Nginx 配置中的代理头部 (Proxy Headers)
+
+你可能已经注意到，在 Nginx 配置的 location / 块中，有几行 proxy_set_header 的配置。这些配置非常重要，请保持原样。
+
+它们的作用是将真实的访客信息传递给后端 Node.js 服务。
+
+为什么需要它？
+
+因为 Nginx 是一个反向代理（中间人），如果没有这些设置，你的后端应用会认为所有请求都来自服务器自己 (127.0.0.1)。这将导致 IP 黑名单、访问日志等功能完全失效。
+
+它们做了什么？
+
+X-Real-IP 和 X-Forwarded-For：将真实的访客 IP 地址告诉后端。
+
+X-Forwarded-Proto：将访客使用的协议（http 或 https）告诉后端，这对于正确生成链接至关重要。
+
+结论：你需要自定义配置你域名的（自定义头部携带客户端 IP 信息回源站），例如我使用的EdgeOne“客户端IP头部”，将名称设置为“X-Forwarded-For”
+
+你不需要修改这些行。我们提供的 Nginx 配置已经为你正确设置好了，以确保所有功能正常工作。
 
 打开命令提示符(cmd)，启动 Nginx：
 
