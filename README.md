@@ -10,11 +10,13 @@
 支持 IP 黑名单功能，可手动或自动封禁恶意 IP。
 集成 Nginx 日志监控，自动发现可疑攻击 IP。
 前后端分离：使用 Node.js + Express + SQLite 作为后端，原生 JS 作为前端，通过 Nginx 代理，性能高效。
+
 🛠️ 技术栈
 后端: Node.js, Express.js
 数据库: SQLite (轻量级文件数据库)
 前端: 原生 HTML, CSS, JavaScript
 Web服务器/反向代理: Nginx
+
 🚀 部署流程 (Windows 环境)
 本指南主要针对 Windows 10/11 或 Windows Server 系统。
 
