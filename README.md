@@ -52,7 +52,7 @@ npm install
 这是部署过程中最关键的一步。你需要修改 backend/server.js 和 blogs.html 两个文件。
 
    A. 配置后端 server.js
-用代码编辑器（如 VS Code）或记事本打开 C:\blog\backend\server.js 文件，找到并替换所有以 TODO: 或 YOUR_... 开头的占位符：以及想要更换博客的Github、Email、B站等，前往blogs.html的更改大约第1640行：“<div class="social-links">”下面的内容即可；以及博客的头像、背景等图片存放于images文件夹下，要修改的话建议去源代码更改头像等路径
+用代码编辑器（如 VS Code）或记事本打开 C:\blog\backend\server.js 文件，找到并替换所有包含 TODO: 或 YOUR_... 的注释下的代码：以及想要更换博客的Github、Email、B站等，前往blogs.html的更改大约第1640行：“<div class="social-links">”下面的内容即可；以及博客的头像、背景等图片存放于images文件夹下，要修改的话建议去源代码更改头像等路径
 
    JWT_SECRET:
 
