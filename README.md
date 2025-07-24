@@ -22,16 +22,15 @@ Web服务器/反向代理: Nginx
 
 1. 环境准备
 在开始之前，请确保你已经安装了以下软件：
-
-Node.js: 点击下载 (请下载 LTS 长期支持版本)。安装时请保持默认选项，安装程序会自动配置好环境变量。
-Nginx: 点击下载 (下载 Mainline version 的 .zip 包)。下载后，建议解压到 C:\nginx 这样一个简单的路径。
+Node.js
+Nginx
 2. 获取代码与安装依赖
-将本项目所有文件解压到 C:\blog。
-打开 命令提示符 (cmd)，进入后端目录并安装依赖：
+将本项目Relase下载的zip文件解压到一个你确定的目录。
+打开 命令提示符 (cmd)，进入后端目录(backend)并安装依赖：
 CMD
-cd C:\blog\backend
+例如：cd C:\blog\backend
 npm install
-安装完成后，在 C:\blog\backend 目录下手动创建一个名为 uploads 的空文件夹。
+安装完成后，在blog目录下手动创建一个名为 uploads 的空文件夹！！！
 3. 获取安全密钥 (Cloudflare)
 本博客使用 Cloudflare Turnstile 进行人机验证，你需要免费注册一个 Cloudflare 账号并获取密钥。
 
