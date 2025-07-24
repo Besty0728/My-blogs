@@ -48,21 +48,25 @@ JWT_SECRET:
 作用: 用于后台登录状态的加密。
 修改: 替换为一个你自己生成的、非常长的随机字符串。
 示例: const JWT_SECRET = 'a-very-long-and-random-string-like-this-one-!@#$';
+
 BACKEND_URL:
 
 作用: 用于生成上传图片的访问链接。
 修改: 替换成你为 后端管理 准备的域名（带 http:// 或 https://）。
 示例: const BACKEND_URL = 'http://blog-admin.yourdomain.com';
+
 BLOCK_IP_FILE (Nginx IP封禁文件路径):
 
 作用: 告诉后端程序 Nginx 的黑名单文件在哪里。
 修改: 替换为你的 Nginx 黑名单文件的绝对路径。
 示例 (假设 Nginx 在 C:\nginx): const BLOCK_IP_FILE = 'C:/nginx/conf/blockips.conf';
+
 secretKey (在 /api/verify-entry 接口中):
 
 作用: Cloudflare Turnstile 的后端验证密钥。
 修改: 替换为你在 步骤 3 中获取的 Secret Key (私钥)。
 示例: const secretKey = '0x4...YOUR_SECRET_KEY...';
+
 nginxPath 和 cwd (在 ban-ip 和 unban-ip 接口中):
 
 作用: 告诉后端程序如何自动重载 Nginx 配置。
@@ -73,6 +77,7 @@ const nginxPath = 'C:/nginx/nginx.exe';
 await execa(nginxPath, ['-s', 'reload'], {
     cwd: 'C:/nginx' 
 });
+
 NGINX_ERROR_LOG_PATH:
 
 作用: 告诉后端程序去哪里监控 Nginx 的错误日志以发现攻击者。
