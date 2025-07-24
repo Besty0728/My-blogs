@@ -212,20 +212,5 @@ node server.js
 默认用户名: admin
 默认密码: admin123
 【极其重要】 登录后请立即进入 安全设置 页面，修改你的管理员密码！
-(可选) 使用 PM2 实现服务持久化（但我没试过）
-为了让后端服务在关闭窗口后依然运行，并能开机自启，推荐使用 pm2-windows。
 
-安装 PM2:
-CMD
-npm install pm2 -g
-配置 PM2 开机自启:
-CMD
-npm install pm2-windows-startup -g
-pm2-startup install
-使用 PM2 启动应用 (在 C:\blog\backend 目录下执行):
-CMD
-pm2 start server.js --name "blog-backend"
-保存进程列表:
-CMD
-pm2 save
-现在，你的后端服务就会在后台稳定运行了。你可以使用 pm2 list 查看状态。
+(可选) 使用 PM2 实现服务持久化（但我没试过）
